@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <array>
-#include <stringview> //TODO: REPLACE EVERY BUFFER<CHAR> IN FUNCTION'S PARAMETERS WITH STRINGVIEW DUE TO USABILITY
+#include <string_view> //TODO: REPLACE EVERY BUFFER<CHAR> IN FUNCTION'S PARAMETERS WITH STRINGVIEW DUE TO USABILITY
 #include <cstdlib>
 
 //default size for our buffers
