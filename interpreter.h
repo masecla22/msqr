@@ -154,14 +154,14 @@ bool checkFileErr(std::string_view fname){
     return hasErrors;//return the errors
 }
 
-void shift(char buffer[size_default],int pos=1)//shifts a string to the left and shortens it. Ex: hello shifted 1 = ello
+void shift(char buffer[size_default], int pos = 1)//shifts a string to the left and shortens it. Ex: hello shifted 1 = ello
 {
   int a = strlen(buffer); // a is equal to the len of buffer
   for(int i=0;i<a;i++) // iterate the values from 0 to a
     buffer[i]=buffer[i+pos]; // shift the string
   buffer[a-pos]=0;//close the string
 }
-int getIndexByName(char a[size_default])//find the index of a variable based on its name
+int getIndexByName(std::string_view str)//find the index of a variable based on its name
 {
   for(int i=0;i<varsDeclared;i++)if(strcmp(a,userV[i].name)==0)return i;return -1; //iterate through the variable names and check if any of them match, if not return -1
 }
