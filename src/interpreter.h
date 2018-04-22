@@ -5,6 +5,7 @@
 #include <string>
 #include <string_view> 
 #include <map>
+#include <cstdlib>
 
 //default size for our buffers
 //now you can easily change it whenever you want
@@ -21,7 +22,7 @@ using variable = std::tuple<std::string, types>;
 static std::map<std::string, variable> var_data;
 
 namespace misc{
-	void pause(size_t time){ system("pause"); }
+	void pause(){ system("pause"); }
 	void run(std::string_view str){ system(str.data()); }
 	void print(std::string_view str){ std::cout << str << '\n'; }
 	void add_var(){ 
@@ -29,6 +30,7 @@ namespace misc{
 		std::cin >> str >> i;
 		var_data.insert({str, {std::to_string(i), types::INT }});
 	}
+	void exit(){ std::exit(0); }
 }
 
 namespace lxr{
@@ -37,7 +39,8 @@ namespace lxr{
 		{ "pause", (size_t*)&misc::pause },
 		{ "run", (size_t*)&misc::run },
 		{ "print", (size_t*)&misc::print },
-		{ "vINT", (size_t*)&misc::add_var } };
+		{ "vINT", (size_t*)&misc::add_var },
+		{ "exit", (size_t*)&misc::exit } };
 
 	/* Takes line, returns list of tokens
 	 * The first one is command name
@@ -55,8 +58,8 @@ namespace lxr{
 	/* Takes list of commands and command name
 	 * Searches for given command in this list
 	 * Returns true if this command exists otherwise false */
-	bool is_comma(std::list<std::string>&& ls, std::string_view comma){
-		return std::find(ls.begin(), ls.end(), comma) != ls.end() || comma.at(0) == '@';
+	bool is_comma(const std::map<std::string, size_t*>& ls, std::string_view comma){
+		return ls.find(comma.data()) != ls.end() || comma.at(0) == '@';
 	}
 }
 
