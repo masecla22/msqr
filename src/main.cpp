@@ -1,5 +1,5 @@
 #include<iostream>
-#include"src/interpreter.h"
+#include"interpreter.h"
 
 int main(){
 	std::cout << "Atleast it compiles" << std::endl;
