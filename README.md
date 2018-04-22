@@ -1,2 +1,3 @@
 # msqr
-A basic programming language
+
+TODO: documentation
