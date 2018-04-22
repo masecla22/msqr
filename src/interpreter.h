@@ -18,13 +18,6 @@ class Parser;
 
 
 namespace exec{
-	static void pause(){ system("pause"); }
-	static void run(std::string_view str){ system(str.data()); }
-=======
-//store for variables
-static std::unordered_map<std::string, variable> var_data;
-
-namespace misc{
 	void pause(){ std::cout<<"Press any key to continue..."<<std::endl; _getch();}
 	void run(std::string_view str){ system(str.data()); }
 	void print(std::string_view str){ std::cout << str << '\n'; }
