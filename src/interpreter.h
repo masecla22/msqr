@@ -4,7 +4,7 @@
 #include <list>
 #include <string>
 #include <string_view> 
-#include <map>
+#include <unordered_map>
 #include <cstdlib>
 #include <conio.h>
 
@@ -20,7 +20,7 @@ enum types{ INT, CHAR };
 using variable = std::tuple<std::string, types>;
 
 //store for variables
-static std::map<std::string, variable> var_data;
+static std::unordered_map<std::string, variable> var_data;
 
 namespace misc{
 	void pause(){ std::cout<<"Press any key to continue..."<<std::endl; _getch();}
@@ -35,7 +35,7 @@ namespace misc{
 }
 
 namespace lxr{
-	std::map<std::string, size_t*>
+	std::unordered_map<std::string, size_t*>
 	commands = { 
 		{ "pause", (size_t*)&misc::pause },
 		{ "run", (size_t*)&misc::run },
@@ -59,7 +59,7 @@ namespace lxr{
 	/* Takes list of commands and command name
 	 * Searches for given command in this list
 	 * Returns true if this command exists otherwise false */
-	bool is_comma(const std::map<std::string, size_t*>& ls, std::string_view comma){
+	bool is_comma(const std::unordered_map<std::string, size_t*>& ls, std::string_view comma){
 		return ls.find(comma.data()) != ls.end() || comma.at(0) == '@';
 	}
 }
