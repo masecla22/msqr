@@ -44,13 +44,13 @@ namespace exec{
 class Parser{
 private:
 	std::unordered_map<std::string, variable> var_data;
-	std::unordered_map<std::string, size_t*>
+	std::unordered_map<std::string, void*>
 	commands = {
-		{ "pause", (size_t*)&exec::pause },
-		{ "run", (size_t*)&exec::run },
-		{ "print", (size_t*)&exec::print },
-		{ "vINT", (size_t*)&exec::add_var },
-		{ "exit", (size_t*)&exec::exit } };
+		{ "pause", (void*)&exec::pause },
+		{ "run", (void*)&exec::run },
+		{ "print", (void*)&exec::print },
+		{ "vINT", (void*)&exec::add_var },
+		{ "exit", (void*)&exec::exit } };
 
 public:
 	/* Takes line, returns list of tokens
