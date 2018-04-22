@@ -46,8 +46,8 @@ class Parser;
 namespace exec{
 	void pause(){ std::cout<<"Press any key to continue..."; _getch();}
 	void run(std::string_view str){ system(str.data()); }
-	void print(std::string_view str){ std::cout << str << '\n'; }
-	void exit(){ std::exit(0); }
+	void print(std::string_view str){ std::cout << str ; //the user should be able to choose wether to add a \n or not }
+	void exit(){ std::exit(0);}
 	void add_var(std::unordered_map<std::string, variable>& varData){
 		std::string str; int i;
 		std::cin >> str >> i;
