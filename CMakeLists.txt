@@ -23,6 +23,5 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
 #FMT
-#add_subdirectory("${PROJECT_SOURCE_DIR}/../../ext/fmt" EXCLUDE_FROM_ALL "${PROJECT_SOURCE_DIR}/build/third_party/fmt")
-add_subdirectory("${PROJECT_SOURCE_DIR}/third_party/fmt" EXCLUDE_FROM_ALL)
-target_link_libraries(Msqr fmt::fmt-header-only)
+#add_subdirectory("${PROJECT_SOURCE_DIR}/third_party/fmt" EXCLUDE_FROM_ALL)
+#target_link_libraries(Msqr fmt::fmt-header-only)
