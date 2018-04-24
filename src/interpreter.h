@@ -1,10 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <array>
-#include <list>
+#include <vector>
 #include <string>
-#include <string_view> 
+#include <sstream>
 #include <map>
+#include <chrono>
+#include <thread>
 #include <cstdlib>
 
 //default size for our buffers
@@ -23,52 +25,61 @@ static std::map<std::string, variable> var_data;
 
 namespace misc{
 	void pause(){ system("pause"); }
-	void run(std::string_view str){ system(str.data()); }
-	void print(std::string_view str){ std::cout << str << '\n'; }
+	void run(std::string &str){ system(str.data()); }
+	void print(std::string &str){ std::cout << str << ' '; }
 	void add_var(){ 
 		std::string str; int i;
 		std::cin >> str >> i;
 		var_data.insert({str, {std::to_string(i), types::INT }});
 	}
 	void exit(){ std::exit(0); }
+	void sleep(uint64_t&& ms){ std::this_thread::sleep_for(std::chrono::milliseconds(ms)); }
 }
 
 namespace lxr{
-	std::map<std::string, size_t*>
+	std::map<std::string, void*>
 	commands = { 
-		{ "pause", (size_t*)&misc::pause },
-		{ "run", (size_t*)&misc::run },
-		{ "print", (size_t*)&misc::print },
-		{ "vINT", (size_t*)&misc::add_var },
-		{ "exit", (size_t*)&misc::exit } };
+		{ "pause", (void*)&misc::pause },
+		{ "run", (void*)&misc::run },
+		{ "print", (void*)&misc::print },
+		{ "vINT", (void*)&misc::add_var },
+		{ "exit", (void*)&misc::exit },
+		{ "sleep", (void*)&misc::sleep }};
 
-	/* Takes line, returns list of tokens
+	/* Takes line, returns vector of tokens
 	 * The first one is command name
-	 * Tail is arguments */
-	std::list<std::string> parse(std::string_view line){
-		std::list<std::string> ls;
-		while(!line.empty()){
-			std::string_view buf(line.data(), line.find_first_of(' ') - 1);
-			ls.push_back(buf.data());
-			line.remove_prefix(std::min(line.find_first_of(' '), line.size()));
-		}
+	 * Tail is arguments 
+	 * I've tried to make this code as generic as possible*/
+	template<
+		class _Char,
+		class _Traits = std::char_traits<_Char>,
+		class _Alloc = std::allocator<_Char>>
+	std::vector<std::basic_string<_Char, _Traits, _Alloc>>
+	parse(const std::basic_string<_Char, _Traits, _Alloc>& line,
+		_Char&& delimiter)
+	{
+		std::vector<std::basic_string<_Char, _Traits, _Alloc>> ls;
+		std::basic_istringstream<_Char, _Traits, _Alloc> linestr(line);
+		std::basic_string<_Char, _Traits, _Alloc> buf;
+		while(std::getline(linestr, buf, delimiter))
+			ls.push_back(buf);
 		return ls;
 	}
 	
-	/* Takes list of commands and command name
-	 * Searches for given command in this list
+	/* Takes vector of commands and command name
+	 * Searches for given command in this vector
 	 * Returns true if this command exists otherwise false */
-	bool is_comma(const std::map<std::string, size_t*>& ls, std::string_view comma){
-		return ls.find(comma.data()) != ls.end() || comma.at(0) == '@';
+	bool is_comma(const std::map<std::string, void*>& ls, const std::string& comma){
+		return ls.find(comma) != ls.end() || comma.at(0) == '@';
 	}
 }
 
 namespace file{
-	/* Reads file, returns list of strings */
-	std::list<std::string>
-	read(std::string_view fname){
-		std::list<std::string> ls;
-		std::ifstream file(fname.data(), std::ios::in);
+	/* Reads file, returns vector of strings */
+	std::vector<std::string>
+	read(const std::string& fname){
+		std::vector<std::string> ls;
+		std::ifstream file(fname, std::ios::in);
 		std::string buf;
 		while(!file.eof() || !file.badbit){
 			std::getline(file, buf);
