@@ -1,0 +1,19 @@
+C:\Users\super\github\msqr\msqr\src\interpreter.h:1:9: warning: #pragma once in main file
+ #pragma once
+         ^
+C:\Users\super\github\msqr\msqr\src\interpreter.h:21:16: error: variable or field 'run' declared void
+  void run(std::string_view str){ system(str.data()); }
+                ^
+C:\Users\super\github\msqr\msqr\src\interpreter.h:21:11: error: 'string_view' is not a member of 'std'
+  void run(std::string_view str){ system(str.data()); }
+           ^
+C:\Users\super\github\msqr\msqr\src\interpreter.h:22:18: error: variable or field 'print' declared void
+  void print(std::string_view str){ std::cout << str ; //the user should be able to choose wether to add a \n or not }
+                  ^
+C:\Users\super\github\msqr\msqr\src\interpreter.h:22:13: error: 'string_view' is not a member of 'std'
+  void print(std::string_view str){ std::cout << str ; //the user should be able to choose wether to add a \n or not }
+             ^
+C:\Users\super\github\msqr\msqr\src\interpreter.h:92:1: error: expected '}' at end of input
+ }
+ ^
+C:\Users\super\github\msqr\msqr\src\interpreter.h:92:1: error: expected '}' at end of input

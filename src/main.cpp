@@ -5,13 +5,11 @@
 int main(){
 	std::cout << "Atleast it compiles" << std::endl;
 	std::string str;
-	Msqr::Parser parser;
 	while(true){
-
 		std::getline(std::cin, str);
 		auto ls = lxr::parse(str, ' ');
 		/* Here we perform double search for no reason
-		 * I'll fix it later 
+		 * I'll fix it later
 		 * Also, I removed checking for command correctness, it worked wrong for unknown reason
 		 * Need to fix it asap*/
 		auto iter = lxr::commands.find(ls.front());
@@ -19,27 +17,13 @@ int main(){
 			auto* fptr = (decltype(&misc::print))(iter->second);
 			for(size_t i = 1; i < ls.size(); i++)
 				fptr(ls.at(i));
-
-		std::cin >> str;
-		auto ls = parser.parse(str);
-		if(!parser.is_comma(ls.front())){
-			std::cout << "Not a command\n";
-			continue;
-		}
-		/* Here we perform double search for no reason
-		 * I'll fix it later */
-		auto iter = parser.find(ls.front());
-		if(iter->first == "print"){
-			auto* fptr = (decltype(&Msqr::exec::print))(iter->second);
-			fptr("Hello");
-
 		}
 		if(iter->first == "pause"){
-			auto* fptr = (decltype(&Msqr::exec::pause))(iter->second);
+			auto* fptr = (decltype(&misc::pause))(iter->second);
 			fptr();
 		}
 		if(iter->first == "exit"){
-			auto *fptr = (decltype(&Msqr::exec::exit))(iter->second);
+			auto *fptr = (decltype(&misc::exit))(iter->second);
 			fptr();
 		}
 		if(iter->first == "sleep"){
@@ -50,4 +34,3 @@ int main(){
 	}
 	return 0;
 }
-
